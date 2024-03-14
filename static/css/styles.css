@@ -1,0 +1,365 @@
+body {
+    display: flex;
+    justify-content: space-evenly;
+    background-size: 100px 100px;
+    background-image:
+        linear-gradient(to right, black 1px, transparent 1px),
+        linear-gradient(to bottom, black 1px, transparent 1px);
+}
+
+#computer {
+    width: 50%;
+}
+
+#computer-specs {
+    background: #2C2D2D;
+    color: white;
+    padding: 10px 20px;
+    width: 200px;
+}
+
+#computer-specs form {
+    display: flex;
+    flex-direction: column;
+}
+
+#computer-specs input {
+    font-size: 10px;
+}
+
+#computer-specs form p, #computer-specs-checkbox {
+    margin-top: 10px;
+    margin-bottom: 1px;
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+#computer-specs-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#computer-specs p {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#computer-specs button {
+    background: grey;
+    font-family: sans-serif;
+    color: white;
+    font-weight: bold;
+    border: none;
+    height: 20px;
+    cursor: pointer;
+}
+
+#computer-specs button:hover {
+    background: white;
+    color: #2C2D2D;
+}
+
+#computer-monitor {
+    border: 10px solid #2C2D2D;
+    margin-top: 50px;
+    padding: 30px;
+    background: url('https://th.bing.com/th/id/OIP.qCG61w3Bidjwa--VXzjdOQHaEK?rs=1&pid=ImgDetMain');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    height: 350px;
+    width: 90%;
+}
+
+.computer-monitor-topic-thoughts-command-tabs button {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
+}
+
+.computer-monitor-topic-thoughts-command-tabs button:hover {
+    background: white;
+    color: #2C2D2D;
+}
+
+#computer-monitor-topic-thoughts {
+    background: #d2d2d2;
+    display: flex;  
+    justify-content: space-between;
+    height: 90%;
+}
+
+#computer-monitor-topic-thoughts-message {
+    height: 100%;
+    width: 500px;
+    background: #2C2D2D;
+    padding: 0 10px;
+    color: white;
+    border-left: 3px solid grey;
+    overflow-y: scroll;
+}
+
+#computer-monitor-topic-thoughts-message-commands {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+#computer-monitor-topic-thoughts-command-execution {
+    background: #2C2D2D;
+    color: white;
+    padding: 1px 10px;
+    font-family: sans-serif;
+    font-size: 12px;
+    border: 3px solid grey;
+    width: 25vw;
+}
+
+#Write form input, #Read form input {
+    background: white;
+    font-family: sans-serif;
+    border: none;
+    font-size: 14px;
+}
+
+#Write form p, #Read form p {
+    margin: 0;
+    margin-top: 10px;
+    color: white;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+#computer-monitor-topic-thoughts-command-description {
+    width: 90%;
+}
+
+#computer-monitor-topic-thoughts-command-submit button, #computer-monitor-topic-thoughts-command-find button {
+    background: grey;
+    color: white;
+    border: none;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100px;
+    height: 25px;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+#computer-monitor-topic-thoughts-command-submit button:hover, #computer-monitor-topic-thoughts-command-find button:hover {
+    background: white;
+    color: black;
+}
+
+.save-progress {
+    background: #4169e1 ;
+    border: #ADD8E6;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.shut-down {
+    background: grey;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.save-progress:hover, .shut-down:hover {
+    background-color: white;
+    color: #2C2D2D;
+}
+
+#computer-legs-feet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.computer-monitor-leg {
+    width: 100px;
+    height: 150px;
+    background: #2C2D2D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.computer-monitor-leg p {
+    color: white;
+    margin-bottom: 1px;
+}
+
+#computer-monitor-leg-xps {
+    color: coral;
+}
+
+.computer-monitor-feet {
+    width: 250px;
+    height: 40px;
+    background: #2C2D2D;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #2C2D2D;
+    background-color: black;
+  }
+  
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: #2C2D2D;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 3px solid grey;
+    background: #2C2D2D;
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Style the close button */
+.topright {
+    float: right;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+}
+  
+.topright:hover {
+    color: red;
+}
+
+#computer-components-cpu-change-color {
+    background: #ccc;
+    width: 200px;
+    height: 170px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#computer-components-cpu-outer {
+    border: 8px solid green;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#computer-components-cpu-inner {
+    background: #C0C0C0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+#computer-components-cpu-inner-cache {
+    background: black;
+    height: 50px;
+    width: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#computer-components-ram-change-color {
+    background: #ccc;
+    width: 350px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#computer-components-ram-outer {
+    border: 8px solid green;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#computer-components-ram-inner {
+    background: black;
+    height: 100%;
+    color: white;
+    font-family: sans-serif;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#computer-components-ram-inner-span {
+    color: lightgreen;
+}
+
+#computer-components-ssd-change-color {
+    background-color: #ccc;
+    padding: 10px;
+    width: 350px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+#computer-components-ssd-outer {
+    border: 8px solid black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#computer-components-ssd-inner {
+    background: #2C2D2D;
+    height: 100%;
+    color: white;
+    font-family: sans-serif;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#computer-components-ssd-inner-span {
+    color: orange;
+}

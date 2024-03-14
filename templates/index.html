@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
+        <title>CPU Simulator</title>
+    </head>
+
+    <body>
+        <div id="computer">
+
+            <div id="computer-specs">
+                <p>Computer Specs</p>
+
+                <form action="/computer" method="post" id="flask_form">
+
+                    <p>CPU name:</p>
+                    <input type="text" name="model" placeholder="Ex: Intel Core i9-14900K" class="computer-specs-input">
+                    <p>Clock speed:</p>
+                    <input type="text" name="clock_speed" placeholder="Ex: 5.80 GHz" class="computer-specs-input">
+                    <p>CPU cores:</p>
+                    <input type="text" name="cores" placeholder="Ex: 8" class="computer-specs-input">
+                    <p>Cache blocks:</p>
+                    <input type="text" name="cache_blocks" placeholder="Ex: 512" class="computer-specs-input">
+                    <p>RAM GBs:</p>
+                    <input type="text" name="ram_gbs" placeholder="Ex: 32" class="computer-specs-input">
+                    <p>SSD GBs:</p>
+                    <input type="text" name="ssd_gbs" placeholder="Ex: 512" class="computer-specs-input">
+                    <p>Cache access speed (nanoseconds):</p>
+                    <input type="text" name="cache_access_time" placeholder="Ex: 0.2" class="computer-specs-input">
+                    <p>RAM access speed (nanoseconds):</p>
+                    <input type="text" name="ram_access_time" placeholder="Ex: 0.8" class="computer-specs-input">
+                    <p>SSD access speed (milliseconds):</p>
+                    <input type="text" name="ssd_access_time" placeholder="Ex: 2" class="computer-specs-input">
+                    <p>Write policy (for cache):</p>
+                    <input type="text" name="cache_write_preference" placeholder="Ex: Write back">
+                    <div id="computer-specs-checkbox">
+                        <input type="checkbox" name="fine_tune_cpu" value="fine_tune">
+                        <label for="fine_tune">Fine tune CPU?</label>
+                    </div>
+
+                    <button type="submit" name="save_specs" id="computer-specs-button" class="colorButtonLightGreen">Save Specs</button>
+
+                </form>
+                
+            </div>
+
+            <div id="computer-monitor">
+                <div id="computer-monitor-topic-thoughts">
+
+                    <div id="computer-monitor-topic-thoughts-command">
+
+                        <div class="computer-monitor-topic-thoughts-command-tabs">
+                            <button class="tablinks" onclick="openCommand(event, 'Write')">Write</button>
+                            <button class="tablinks" onclick="openCommand(event, 'Read')">Read</button>
+                        </div>
+
+                        <div id="Write" class="tabcontent">
+                            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+
+                            <form action="/computer" method="post" id="flask_form">
+                                <p>Topic:</p>
+                                <input type="text" name="topic" placeholder="Ex: City" class="computer-monitor-topic-thoughts-command-topic">
+                                <p>Description/Story/Thoughts:</p>
+                                <input type="text" name="description_story_thoughts" placeholder="Ex: Chicago" id="computer-monitor-topic-thoughts-command-description">
+
+                                <div id="computer-monitor-topic-thoughts-command-submit">
+                                    <button type="submit" name="store_cache" class="lightGreenCPU lightGreenRAM" id="lightGreenCache">Submit</button>
+                                    <button type="submit" name="store_ssd" class="lightGreenCPU" id="lightGreenSSD">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="Read" class="tabcontent">
+                            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+
+                            <form action="/computer" method="post" id="flask_form">
+                                <p>Search Topic:</p>
+                                <input type="text" name="topic" placeholder="Ex: Topic" class="computer-monitor-topic-thoughts-command-topic">
+
+                                <div id="computer-monitor-topic-thoughts-command-find">
+                                    <button type="submit" name="read_cache" class="lightGreenCPU lightGreenRAM" id="lightGreenCache">Find Topic</button>
+                                    <button type="submit" name="read_ssd" class="lightGreenCPU" id="lightGreenSSD">Search OS</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="computer-monitor-topic-thoughts-command-execution">
+                            <p>Progress: {{ shut_down_data_check_message }}</p>
+                            <p>Execution time: {{ execution_time }}</p>
+                        </div>
+
+                    </div>
+
+                    <div id="computer-monitor-topic-thoughts-message">
+                        <p>Computer commands:</p>
+                        {% for message in message %}
+                            <p id="computer-monitor-topic-thoughts-message-commands">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div id="computer-monitor-shut-down-and-save-progress">
+                    <form action="/computer" method="post" id="flask_form">
+                        <button type="submit" name="save_progress" class="lightGreenCPU save-progress" id="lightGreenSSD">Save Progress</button>
+                        <button type="submit" name="shut_down" class="lightGreenCPU shut-down">Shut Down</button>
+                    </form>
+                </div>
+
+            </div>
+            <div id="computer-legs-feet">
+                <div class="computer-monitor-leg">
+                    <p>Presidio</p>
+                    <p>Edge®</p>
+                    <p id="computer-monitor-leg-xps">XPS</p>
+                </div>
+                <div class="computer-monitor-feet"></div>
+            </div>
+
+        </div>
+
+        <div id="computer-components">
+
+            <!-- Changes color to light green when the CPU functions -->
+            <div id="computer-components-cpu-change-color">
+                <!-- Green borders -->
+                <div id="computer-components-cpu-outer"> 
+                    <!-- Silver inside -->
+                    <div id="computer-components-cpu-inner">
+
+                        <p>{{ model }}</p>
+                        <p>{{ clock_speed_message }}</p>
+
+                        <!-- ADU and CU not shown -->
+                        <!-- Changes color to light green if saved -->
+                        <div id="computer-components-cpu-inner-cache">
+                            <p>Cache</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="computer-components-ram-change-color">
+                <!-- Green borders -->
+                <div id="computer-components-ram-outer">
+                    <!-- Black inside -->
+                    <div id="computer-components-ram-inner">
+
+                        <p>Presidio® <span id="computer-components-ram-inner-span">RAMPlus™</span> - {{ ram_gbs_message }}</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background turns into lightgreen when SSD functions -->
+            <div id="computer-components-ssd-change-color">
+                <!-- Black borders -->
+                <div id="computer-components-ssd-outer">
+                    <!-- Light black inside -->
+                    <div id="computer-components-ssd-inner">
+
+                        <p>Presidio® <span id="computer-components-ssd-inner-span">SSDPlus™</span> - {{ ssd_gbs_message }}</p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Terminal for all JavaScript functions -->
+        <script src="static/script.js"></script>
+        <!-- End of all JavaScript functions -->
+
+    </body>
+</html>
