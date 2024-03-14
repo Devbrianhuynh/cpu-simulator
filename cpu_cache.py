@@ -1,8 +1,7 @@
 from ram_ssd import RAM
 from intermediary import Intermediary
 from hash_map import Hash_Map
-import psycopg2
-import psycopg2.extras
+import random
 
 
 # CPU handles all of the user preferences for storage and policies
@@ -87,6 +86,7 @@ class CPU:
 class Cache(Intermediary):
     def __init__(self, blocks, access_time, ram_gbs, ram_access_time, ssd_gbs, ssd_access_time):
         super().__init__('Cache', access_time)
+        self.blocks = blocks
         self.cache_block = Hash_Map(blocks) # Each data will be given a 'tag' for identification and 'data' to store the data in: ['tag', 'data']
         self.ram = RAM(ram_gbs, ram_access_time, ssd_gbs, ssd_access_time)
         self.fifo_index = 0
@@ -105,18 +105,18 @@ class Cache(Intermediary):
         else:
             if write_preference == 'write back':
                 self.replace_block(address, data, True) 
-                return super().process_request_write(data, 'Cache storage')
+                return super().process_request_write(address, data, 'Cache storage')
 
             elif write_preference == 'write through':
                 self.replace_block(address, data, False)
                 return self.ram.write_ram(address, data) # Enter this data to the RAM along with adding this data to the cache 
 
     
-    def read_cache(self, address):
+    def read_cache(self, address) -> str:
         data = self.cache_block.retrieve(address)
 
         if data:
-            return super().process_request_read(data, 'Cache read')
+            return super().process_request_read(address, data, 'Cache read')
         
         else:
             data = self.ram.read_ram(address) # If there isn't any data in the cache, we go to the RAM where the rest of the data is stored
@@ -125,12 +125,12 @@ class Cache(Intermediary):
                 return f'The topic in cache \'{address}\' doesn\'t exist'
             else:
                 self.replace_block(address, data, False) # Replace the oldest cache data with this RAM data
-                return super().process_request_write(data, 'Cache read')
+                return super().process_request_write(address, data, 'Cache read')
 
 
     # Replace the oldest cache with the newest one (that is to be entered into the cache)
     def replace_block(self, address, data, write_back = False):
-        index = self.fifo()
+        index = self.get_hash_index(address)
 
         # Take the old data and update it into the RAM 
         if write_back == True:
@@ -141,22 +141,19 @@ class Cache(Intermediary):
                 address_old, data_old = block_old
                 self.ram.write_ram(address_old, data_old)
 
-        self.cache_block.array[index] = [address, data]
-        # self.connect_sql('write', address, data) # Send this data to SQL in addition to the hash map
+        try:
+            self.cache_block.assign(address, data)
+        except: 
+            # If an error is given, the hash map is full; replace the old address/data with this new address/data
+            # Any present data inside of this hash is wiped out and replaced with this new data
+            self.cache_block.array[index] = [address, data]
 
 
-    # First-in-first-out: The oldest cache will be the first one to get replaced
-    # fifo_index = index for the cache blocks
-    def fifo(self):
-        fifo_index = self.fifo_index
-        
-        # If the cache blocks are full, we take the oldest index (index 0) and replace it with new cache data
-        if fifo_index == len(self.cache_block.array):
-            self.fifo_index = 0
+    # Get the hash index of the address entered to check if it has already been filled with data
+    def get_hash_index(self, address):
+        address_index = sum(address.encode()) % self.blocks
 
-        self.fifo_index += 1
-
-        return fifo_index
+        return address_index
 
   
     # Gets the execution time for processing the cache
@@ -165,7 +162,7 @@ class Cache(Intermediary):
     
 
     # To ensure that the cache and RAM are connected, call the commands for RAM here:
-        # Resembles a 'snake-like' architecture, where the cache is connected to the RAM, and the RAM is connected to the SSD: Cache --> RAM --> SSD
+        # Inheritence/constructor chaining: Cache is connected to the RAM, and the RAM is connected to the SSD: Cache --> RAM --> SSD
     def store_data_to_ram(self, address, data):
         return self.ram.write_ram(address, data)
     
