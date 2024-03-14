@@ -4,7 +4,6 @@ The CPU Simulator simulates how cache, RAM, and SSD works in a computer.
 - [Technologies Used](#technologies) - Frameworks and languages used
 - [Installation](#installation) - How to install the CPU Simulator
 - [Usage](#usage) - How to use the CPU Simulator
-- [Tests](#tests) - How to test the CPU Simulator
 - [Contributing](#contributing) - How to contribute in this project
 - [License](#license) - Unlicense  
 
@@ -88,8 +87,16 @@ To use the CPU Simulator, you'll need:
      - Submit sends the data to the cache
      - Save sends the data to the SSD for permanent storage
 3. Reading data
-   - Enter the topic that you had just entered  
+   - Enter the topic that you had just entered (seen in the message screen on the right of the monitor)
+   - The description you've entered is displayed
 
+<a name='contributing'></a>
+## Contributing 
+Feel free to contribute to this project, make it better, and add new features
+
+<a name='license'></a>
+## License
+This project is licensed under The Unlicensed license and was orignally developed by <a href='https://github.com/Devbrianhuynh'>@Devbrianhuynh</a>
 
 
 
